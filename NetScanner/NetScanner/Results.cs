@@ -44,12 +44,12 @@ namespace NetScanner
             try
             {
                 string p = Path.GetDirectoryName(Application.ExecutablePath) + "\\saved";
-                DirectoryInfo d = new DirectoryInfo(p);//Assuming Test is your Folder
-                FileInfo[] Files = d.GetFiles("*.csv"); //Getting Text files
+                DirectoryInfo d = new DirectoryInfo(p);//This is going to folder called "saved"
+                FileInfo[] Files = d.GetFiles("*.csv"); //Getting Text files as *.csv
                 string str = "";
-                foreach (FileInfo file in Files)
+                foreach (FileInfo file in Files) //This will get the CSV files in the SAVED Folder
                 {
-                    lstFile.Items.Add(new ListViewItem(new String[] { file.Name }));
+                    lstFile.Items.Add(new ListViewItem(new String[] { file.Name })); //Add file names to the list
                 }
                 // MessageBox.Show(str);
             }
@@ -57,6 +57,11 @@ namespace NetScanner
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void LstFile_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

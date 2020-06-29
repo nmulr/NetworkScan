@@ -107,6 +107,7 @@
             this.lstView.TabIndex = 9;
             this.lstView.UseCompatibleStateImageBehavior = false;
             this.lstView.View = System.Windows.Forms.View.Details;
+            this.lstView.SelectedIndexChanged += new System.EventHandler(this.LstView_SelectedIndexChanged);
             // 
             // IP
             // 

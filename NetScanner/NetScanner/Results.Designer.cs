@@ -44,6 +44,7 @@
             this.lstFile.TabIndex = 7;
             this.lstFile.UseCompatibleStateImageBehavior = false;
             this.lstFile.View = System.Windows.Forms.View.Details;
+            this.lstFile.SelectedIndexChanged += new System.EventHandler(this.LstFile_SelectedIndexChanged);
             // 
             // FileName
             // 

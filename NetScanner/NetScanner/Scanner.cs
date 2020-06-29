@@ -24,6 +24,7 @@ namespace NetScanner
         {
             InitializeComponent();
             Control.CheckForIllegalCrossThreadCalls = false;
+            //GetIPAddress();
         }
         public void scan()
         {
@@ -46,26 +47,26 @@ namespace NetScanner
             subnet = ipp[0] + "." + ipp[1] + "." + ipp[2];
             for (int i = 1; i < 255; i++)
             {
-                string subnetn = "." + i.ToString();
+                string subnetn = "." + i.ToString(); //This is where the ip address is created 192.168.1.1 - 192.168.1.254
                 myPing = new Ping();
-                reply = myPing.Send(subnet + subnetn);
+                reply = myPing.Send(subnet + subnetn); // This where the check is done to see if it's a valid ip or not.
 
-                if (reply.Status == IPStatus.Success)
+                if (reply.Status == IPStatus.Success) // If the ip is valid go to the below functions
                 {
                     try
                     {
-                        addr = IPAddress.Parse(subnet + subnetn);
-                        host = Dns.GetHostEntry(addr);
+                        addr = IPAddress.Parse(subnet + subnetn); //Creates the ip address to display in the form
+                        host = Dns.GetHostEntry(addr);  //Get the host name of the ip address
 
-                        lstView.Items.Add(new ListViewItem(new String[] { subnet + subnetn, host.HostName, "Up" }));
+                        lstView.Items.Add(new ListViewItem(new String[] { subnet + subnetn, host.HostName, "Up" })); // adds the valid ip addresses to the list view
                     }
                     catch
                     {
-                        //MessageBox.Show("Couldnt retrieve hostname for " + subnet + subnetn, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+                        
                     }
                 }
                 lbl_ipname.Text = subnet + subnetn;
-                progressBar1.Value += 1;
+                progressBar1.Value += 1; //Update the prograss bar value
             }
             //}
             // }
@@ -87,7 +88,7 @@ namespace NetScanner
             }
             else
             {
-                myThread = new Thread(() => scan());
+                myThread = new Thread(() => scan()); //Starts the scanning process
                 myThread.Start();
 
                 if (myThread.IsAlive == true)
@@ -103,7 +104,7 @@ namespace NetScanner
         {
             try
             {
-                myThread.Suspend();
+                myThread.Suspend(); //Stop the scanning process
                 btnSave.Enabled = true;
                 btn_Scan.Enabled = true;
                 btnStop.Enabled = false;
@@ -120,20 +121,25 @@ namespace NetScanner
             try
             {
                 DateTime now = DateTime.Now;
-                string p = Path.GetDirectoryName(Application.ExecutablePath) + "\\saved\\" + DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + ".csv";
+                string p = Path.GetDirectoryName(Application.ExecutablePath) + "\\saved\\" + DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + ".csv"; //Create a new excel file with current date and time.
                 string data = "";
                 for (int i = 0; i < lstView.Items.Count; i++)
                 {
-                    data = data + lstView.Items[i].SubItems[0].Text + "," + lstView.Items[i].SubItems[1].Text + "\n";
+                    data = data + lstView.Items[i].SubItems[0].Text + "," + lstView.Items[i].SubItems[1].Text + "\n"; //Adds the data in listview to the string "data"
                 }
                 //MessageBox.Show(data);
-                File.WriteAllText(p, data);
+                File.WriteAllText(p, data); //Then write above data in to the excel file.
                 MessageBox.Show("Successfully Saved", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void LstView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
