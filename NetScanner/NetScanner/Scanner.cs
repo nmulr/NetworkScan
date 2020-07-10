@@ -141,5 +141,10 @@ namespace NetScanner
         {
 
         }
+
+        private void TxtIp_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
